@@ -7,10 +7,10 @@ namespace Persistencia.Entities
         [Key]
         public int id_FormaVenta { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El Campo Descripcion es Requerido")]
         public string? Descripcion_FormaVenta { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El Campo Simbolo es Requerido")]
         public string? Simbolo{ get; set; }
     }
 }

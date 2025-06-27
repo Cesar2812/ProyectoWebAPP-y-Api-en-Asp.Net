@@ -1,0 +1,35 @@
+﻿@model Persistencia.Entities.Tipo_Producto
+@{
+    ViewData["Title"] = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+
+    <div class="card-header">
+        CREAR TIPO DE PRODUCTO
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Crear" asp-controller="TipoProducto" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Descripcion</label>
+                <input asp-for="Descripcion_Tipo" type="text" class="form-control">
+                <span asp-validation-for="Descripcion_Tipo" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary"><i class="bi bi-floppy2-fill"></i> Guardar</button>
+            <a asp-action="Listar" asp-controller="TipoProducto" class="btn btn-warning"><i class="bi bi-card-checklist"></i> Volver a la Lista</a>
+        </form>
+
+    </div>
+
+</div>
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

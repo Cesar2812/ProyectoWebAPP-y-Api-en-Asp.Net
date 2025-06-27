@@ -1,0 +1,128 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Persistencia.Entities;
+using System.Text.Json;
+
+namespace WebApp_Inventory.Controllers;
+
+public class FormaVentaController : Controller
+{
+    private static string? _baseUrl;
+
+    private JsonSerializerOptions options = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
+
+    public FormaVentaController()
+    {
+        var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+        _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;
+    }
+
+    public IActionResult Listar()
+    {
+        List<Forma_Venta> lista = new List<Forma_Venta>();
+
+
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+        var response = client.GetAsync("/Forma_Venta");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var json_respuesta = response.Result.Content.ReadAsStringAsync().Result;
+            var resultado = JsonSerializer.Deserialize<List<Forma_Venta>>(json_respuesta, options);
+            lista = resultado ?? new List<Forma_Venta>();
+        }
+
+        return View(lista);
+    }
+
+    //crear una Nueva Forma de Venta
+    public IActionResult Crear()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Crear(Forma_Venta objForma)
+    {
+        bool? respuesta = true;
+
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+
+        var response = client.PostAsJsonAsync("/Forma_Venta", objForma);
+
+        if (response.Result.IsSuccessStatusCode)
+        {
+            respuesta = true;
+        }
+        return RedirectToAction("Listar");
+    }
+
+    //editar una Forma de Venta
+    public IActionResult Editar(int id)
+    {
+        Forma_Venta ob = new Forma_Venta();
+
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+        var response = client.GetAsync($"/Forma_Venta/{id}");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var json_respuesta = response.Result.Content.ReadAsStringAsync().Result;
+            //Deserializando el objeto JSON a un objeto Tipo_Producto
+            var objForma = JsonSerializer.Deserialize<Forma_Venta>(json_respuesta, options);
+            ob = objForma ?? new Forma_Venta();
+        }
+        return View(ob);
+    }
+
+    [HttpPost]
+    public IActionResult Editar(Forma_Venta objForma)
+    {
+        bool? respuesta = true;
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+        var response = client.PutAsJsonAsync($"/Forma_Venta/{objForma.id_FormaVenta}", objForma);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            respuesta = true;
+        }
+        return RedirectToAction("Listar");
+    }
+
+    //eliminar una Froma de Venta
+    public IActionResult Eliminar(int id)
+    {
+        Forma_Venta ob = new Forma_Venta();
+
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+        var response = client.GetAsync($"/Forma_Venta/{id}");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var json_respuesta = response.Result.Content.ReadAsStringAsync().Result;
+            //Deserializando el objeto JSON a un objeto Tipo_Producto
+            var objForma = JsonSerializer.Deserialize<Forma_Venta>(json_respuesta, options);
+            ob = objForma ?? new Forma_Venta();
+        }
+        return View(ob);
+    }
+
+    [HttpPost]
+    public IActionResult Eliminar(Forma_Venta objForma)
+    {
+        bool? respuesta = true;
+        var client = new HttpClient();
+        client.BaseAddress = new Uri(_baseUrl);
+        var response = client.DeleteAsync($"/Forma_Venta/{objForma.id_FormaVenta}");
+        if (response.Result.IsSuccessStatusCode)
+        {
+            respuesta = true;
+        }
+        return RedirectToAction("Listar");
+    }
+
+
+}

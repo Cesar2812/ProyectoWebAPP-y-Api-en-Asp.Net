@@ -78,8 +78,6 @@ app.MapDelete("/Tipo_Producto/{id}", (int id, Inventory_Context db) =>
 #endregion
 
 
-
-
 //EndPoints Forma_Venta
 #region Forma_Venta
 //POST para Forma_Venta
@@ -136,8 +134,6 @@ app.MapDelete("/Forma_Venta/{id}", (int id, Inventory_Context db) =>
     return Results.NoContent();//retornando 204 No Content
 });
 #endregion 
-
-
 
 
 app.Run();

@@ -1,0 +1,28 @@
+﻿@model Persistencia.Entities.Tipo_Producto
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+
+    <div class="card-header">
+        ELIMINAR DE TIPO PRODUCTO
+    </div>
+
+    <div class="card-body">
+        <form asp-action="Eliminar" asp-controller="TipoProducto" method="post">
+
+            <input asp-for="id_TipoProducto" type="hidden" class="form-control">
+
+            <div class="alert alert-danger" role="alert">
+                ¿Desea eliminar el Tipo: @Html.DisplayFor(m => m.Descripcion_Tipo) ?
+            </div>
+
+
+            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</button>
+            <a asp-action="Listar" asp-controller="TipoProducto" class="btn btn-warning"><i class="bi bi-card-checklist"></i> Volver a la Lista</a>
+        </form>
+    </div>
+</div>
+

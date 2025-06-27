@@ -1,0 +1,40 @@
+﻿@model List<Persistencia.Entities.Tipo_Producto>
+@{
+    ViewData["Title"] = "Lista De Tipos De Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+
+<div class="card">
+    <div class="card-header">
+        LISTA DE TIPOS DE PRODUCTOS
+    </div>
+    <div class="card-body">
+        <a asp-action="Crear" asp-controller="TipoProducto" class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear Nuevo</a>
+
+        <hr />
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>DESCRIPCION</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tipo in Model)
+                {
+                    <tr>
+                        <td>@tipo.Descripcion_Tipo</td>
+                        <td>
+                            <a asp-action="Editar" asp-controller="TipoProducto" asp-route-id="@tipo.id_TipoProducto" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</a>
+                            <a asp-action="Eliminar" asp-controller="TipoProducto" asp-route-id="@tipo.id_TipoProducto" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,46 @@
+﻿@model Persistencia.Entities.Forma_Venta
+@{
+    ViewData["Title"] = "Editar";
+} 
+
+<div class="card">
+
+    <div class="card-header">
+        EDITAR FORMA DE VENTA
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Editar" asp-controller="FormaVenta" method="post">
+
+            <input asp-for="id_FormaVenta" type="hidden" class="form-control">
+
+            <div class="mb-3">
+                <label class="form-label">Descripcion</label>
+                <input asp-for="Descripcion_FormaVenta" type="text" class="form-control">
+                <span asp-validation-for="Descripcion_FormaVenta" class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Simbolo</label>
+                <input asp-for="Simbolo" type="text" class="form-control">
+                <span asp-validation-for="Simbolo" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary"><i class="bi bi-floppy2-fill"></i> Guardar</button>
+            <a asp-action="Listar" asp-controller="FormaVenta" class="btn btn-warning"><i class="bi bi-card-checklist"></i> Volver a la Lista</a>
+        </form>
+
+    </div>
+</div>
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
