@@ -9,7 +9,6 @@ namespace Persistencia.Entities
 
         [Required]
         public string? Nombre { get; set; }
-        public DateTime FechaRegistro { get; set; }
         [Required]
         public Tipo_Producto? TipoProducto { get; set; }
     }

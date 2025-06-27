@@ -9,7 +9,7 @@ public class Tipo_Producto
     public int id_TipoProducto { get; set; } 
 
     [Required]
-    public string? Descripcion_TipoProducto { get; set; }
+    public string? Descripcion_Tipo { get; set; }
 
-    public DateTime FechaRegistro { get; set; }
+
 } 

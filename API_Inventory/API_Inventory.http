@@ -1,6 +1,63 @@
 @API_Inventory_HostAddress = http://localhost:5016
+### Direccion de la API de Inventario
 
-GET {{API_Inventory_HostAddress}}/weatherforecast/
-Accept: application/json
+####TIPOS DE PRODUCTO
+POST http://localhost:5016/Tipo_Producto
+content-Type: application/json
+{
+  "descripcion_tipo": "Producto Perecedero"
+  
+} 
+###
+
+GET http://localhost:5016/Tipo_Producto
+content-Type: application/json 
 
 ###
+
+PUT http://localhost:5016/Tipo_Producto/1
+content-Type: application/json
+{
+  "descripcion_tipo": "Producto No Perecedero"
+  
+} 
+###
+GET http://localhost:5016/Tipo_Producto/1
+content-Type: application/json 
+###
+
+DELETE http://localhost:5016/Tipo_Producto/1
+####TIPOS DE PRODUCTO
+
+
+
+
+###FORMAS DE VENTA
+POST http://localhost:5016/Forma_Venta
+content-Type: application/json
+{
+  "descripcion_formaVenta": "Unidad",
+  "simbolo": "U"
+} 
+####
+GET http://localhost:5016/Forma_Venta
+content-Type: application/json
+###
+
+PUT http://localhost:5016/Forma_Venta/4
+content-Type: application/json
+{
+  "descripcion_formaVenta": "Kilogramo",
+  "simbolo": "Kg"
+}
+
+####
+GET http://localhost:5016/Forma_Venta/4
+content-Type: application/json
+
+
+###
+DELETE http://localhost:5016/Forma_Venta/4  
+#####
+
+

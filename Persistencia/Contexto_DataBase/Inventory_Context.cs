@@ -4,9 +4,9 @@ namespace Persistencia.Contexto_DataBase
 {
     public class Inventory_Context(DbContextOptions<Inventory_Context>opc):DbContext(opc)
     { 
-        public DbSet<Producto> Producto { get; set; }
-        public DbSet<Tipo_Producto> TipoProducto { get; set; }
-        public DbSet<Producto_Stock> ProductoStock { get; set; }
-        public DbSet<Forma_Venta> FormaVenta { get; set; }
+        public DbSet<Producto> Producto=>Set<Producto>();
+        public DbSet<Tipo_Producto> Tipo_Producto=>Set<Tipo_Producto>();
+        public DbSet<Producto_Stock> Producto_Stock => Set<Producto_Stock>();
+        public DbSet<Forma_Venta> Forma_Venta=>Set<Forma_Venta>();
     }
 }

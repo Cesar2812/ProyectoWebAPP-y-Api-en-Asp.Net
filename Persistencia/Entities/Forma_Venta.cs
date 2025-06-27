@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Persistencia.Entities
 {
     public class Forma_Venta
     {
-
+        [Key]
         public int id_FormaVenta { get; set; }
+
+        [Required]
         public string? Descripcion_FormaVenta { get; set; }
+
+        [Required]
         public string? Simbolo{ get; set; }
     }
 }
