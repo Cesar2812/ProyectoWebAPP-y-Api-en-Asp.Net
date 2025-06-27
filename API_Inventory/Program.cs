@@ -1,4 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Persistencia.Contexto_DataBase;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+//cadena de conexion a la base de datos 
+var conexionString = builder.Configuration.GetConnectionString("CadenaSql");//leyendo la cadena de conexion desde el appsettings.json
+
+
+//inyeccion de dependencias para el contexto de la base de datos usando cofiguarada para usar SQL Server
+builder.Services.AddDbContext<Inventory_Context>(options =>
+{
+    options.UseSqlServer(conexionString);
+});
+
+
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
