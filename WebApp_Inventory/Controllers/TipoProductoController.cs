@@ -43,11 +43,11 @@ public class TipoProductoController : Controller
         return View();
     }
 
+
     [HttpPost]
     public IActionResult Crear(Tipo_Producto objTipo)
     {
-        bool? respuesta = true;
-
+        
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
 
@@ -55,10 +55,19 @@ public class TipoProductoController : Controller
 
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta=true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
+      
+           
+       
     }
+
 
     //editando un tipo de producto
     public IActionResult Editar(int id)
@@ -81,15 +90,21 @@ public class TipoProductoController : Controller
     [HttpPost]
     public IActionResult Editar(Tipo_Producto objTipo)
     {
-        bool? respuesta = true;
+       
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
         var response = client.PutAsJsonAsync($"/Tipo_Producto/{objTipo.id_TipoProducto}", objTipo);
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta = true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
+        
     }
 
     //eliminar un tipo de producto
@@ -113,14 +128,19 @@ public class TipoProductoController : Controller
     [HttpPost]
     public IActionResult Eliminar(Tipo_Producto objTipo)
     {
-        bool? respuesta = true;
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
         var response = client.DeleteAsync($"/Tipo_Producto/{objTipo.id_TipoProducto}");
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta = true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
+      
     }
 }

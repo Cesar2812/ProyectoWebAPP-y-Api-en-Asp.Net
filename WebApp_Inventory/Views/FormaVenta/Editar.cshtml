@@ -38,6 +38,20 @@
 @section scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    } 
+
+    @if (ViewBag.Exito != null && (bool)ViewBag.Exito)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Forma de Venta editada correctamente',
+                showConfirmButton: false,
+                timer: 1300
+            }).then((result) => {
+                window.location = '@Url.Action("Listar", "FormaVenta")';
+            });
+        </script>
     }
 }
 

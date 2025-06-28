@@ -46,8 +46,7 @@ public class FormaVentaController : Controller
     [HttpPost]
     public IActionResult Crear(Forma_Venta objForma)
     {
-        bool? respuesta = true;
-
+       
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
 
@@ -55,9 +54,14 @@ public class FormaVentaController : Controller
 
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta = true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
     }
 
     //editar una Forma de Venta
@@ -81,15 +85,21 @@ public class FormaVentaController : Controller
     [HttpPost]
     public IActionResult Editar(Forma_Venta objForma)
     {
-        bool? respuesta = true;
+       
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
         var response = client.PutAsJsonAsync($"/Forma_Venta/{objForma.id_FormaVenta}", objForma);
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta = true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
+      
     }
 
     //eliminar una Froma de Venta
@@ -113,15 +123,20 @@ public class FormaVentaController : Controller
     [HttpPost]
     public IActionResult Eliminar(Forma_Venta objForma)
     {
-        bool? respuesta = true;
         var client = new HttpClient();
         client.BaseAddress = new Uri(_baseUrl);
         var response = client.DeleteAsync($"/Forma_Venta/{objForma.id_FormaVenta}");
         if (response.Result.IsSuccessStatusCode)
         {
-            respuesta = true;
+            ViewBag.Exito = true; // se guardo correctamente
+            ModelState.Clear();   //se limpia el modelo para que no se repita el mensaje de exito
+            return View();
         }
-        return RedirectToAction("Listar");
+        else
+        {
+            return View();
+        }
+       
     }
 
 

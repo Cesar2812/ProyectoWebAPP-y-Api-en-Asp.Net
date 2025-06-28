@@ -33,4 +33,17 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    @if (ViewBag.Exito != null && (bool)ViewBag.Exito)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: ' Tipo de Producto editado  correctamente',
+                showConfirmButton: false,
+                timer: 1300
+            }).then((result) => {
+                window.location = '@Url.Action("Listar", "TipoProducto")';
+            });
+        </script>
+    }
 }

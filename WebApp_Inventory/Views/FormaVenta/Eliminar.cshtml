@@ -25,3 +25,19 @@
         </form>
     </div>
 </div>
+
+@section scripts {
+    @if (ViewBag.Exito != null && (bool)ViewBag.Exito)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Forma de Venta eliminada correctamente',
+                showConfirmButton: false,
+                timer: 1300
+            }).then((result) => {
+                window.location = '@Url.Action("Listar", "FormaVenta")';
+            });
+        </script>
+    }
+}
