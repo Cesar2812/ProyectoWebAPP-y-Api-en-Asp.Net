@@ -20,7 +20,7 @@
                     <th>CODIGO</th>
                     <th>PRODUCTO</th>
                     <th>TIPO</th>
-                    <th>FORMA</th>
+                    <th>FORMA DE VENTA</th>
                     <th>SIMBOLO</th>
                     <th>STOCK</th>
                     <th>ESTADO</th>
@@ -43,8 +43,8 @@
                             </span>
                         </td>
                         <td>
-                            <a asp-action="Editar" asp-controller="FormaVenta" asp-route-id="@item.Codigo_Producto" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</a>
-                            <a asp-action="Eliminar" asp-controller="FormaVenta" asp-route-id="@item.Codigo_Producto" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                            <a asp-action="Editar" asp-controller="Producto" asp-route-id="@item.Codigo_Producto" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</a>
+                            <a asp-action="Eliminar" asp-controller="Producto" asp-route-id="@item.Codigo_Producto" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
                         </td>
                     </tr>
                 }
