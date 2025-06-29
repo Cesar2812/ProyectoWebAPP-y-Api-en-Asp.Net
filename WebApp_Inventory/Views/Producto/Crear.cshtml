@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "ASINAR PRODUCTO A FORMA DE VENTA CON STOCK";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+} 
+
+<div class="card">
+
+    <div class="card-header">
+        GESTION DE PRODUCTOS CON SU  FORMA DE VENTA Y STOCK 
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Crear" method="post">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Nombre del Producto</label>
+                    <input class="form-control" name="Nombre" autocomplete="off" />
+                </div>
+                <div class="col-md-6">
+                    <label>Tipo de Producto</label>
+                    <select class="form-select" name="id_tipoProducto" asp-items="ViewBag.TiposProducto">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                </div>
+            </div>
+
+            <h5 class="mt-3">Detalles De Formas de Venta</h5>
+
+            <!-- Detalles - Ejemplo con 3 filas -->
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label>Código del Producto</label>
+                        <input class="form-control" name="Detalles[@i].Codigo_Producto" autocomplete="off" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Forma de Venta</label>
+                        <select class="form-select" name="Detalles[@i].id_formaventa" asp-items="ViewBag.FormasVenta">
+                            <option value="">-- Seleccione --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Stock</label>
+                        <input type="number" class="form-control" name="Detalles[@i].Stock" value="0" />
+                    </div>
+                </div>
+            }
+
+
+            <button type="submit" class="btn btn-success"><i class="bi bi-floppy2-fill"></i> Guardar</button>
+                @* <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Guardar
+                </button> *@
+                <a asp-action="Listar" asp-controller="Producto" class="btn btn-warning m-2"><i class="bi bi-card-checklist"></i> Volver a la Lista</a>
+           
+        </form>
+
+
+    </div>
+
+</div> 
+
+@section Scripts {
+    
+    <script>
+        @if (TempData["Exito"] != null)
+        {
+                <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: '@TempData["Exito"]',
+                        showConfirmButton: false,
+                        timer: 1300
+                    });
+                </text>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+                <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@TempData["Error"]'
+                    });
+                </text>
+        }
+    </script>
+}

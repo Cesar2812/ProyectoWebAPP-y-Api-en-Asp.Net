@@ -9,5 +9,8 @@ public class Tipo_Producto
 
     [Required(ErrorMessage = "El Campo Descripcion es Requerido")]
     public string? Descripcion_Tipo { get; set; }
+
+    // Relación con Productos
+    public ICollection<Producto>? Productos { get; set; }
 } 
 

@@ -12,5 +12,9 @@ namespace Persistencia.Entities
 
         [Required(ErrorMessage = "El Campo Simbolo es Requerido")]
         public string? Simbolo{ get; set; }
+
+
+        // Relación con Producto_Stock
+        public ICollection<Producto_Stock>? ProductosStock { get; set; }
     }
 }
