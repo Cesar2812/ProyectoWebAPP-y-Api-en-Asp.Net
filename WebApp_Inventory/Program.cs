@@ -16,7 +16,15 @@ builder.Services.AddDbContext<Inventory_Context>(options =>
 });
 
 
+//serivicios de sesion
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(int.Parse(builder.Configuration["TiempoExipiracion"]!)); // Tiempo de expiración de la sesión
+    options.Cookie.IsEssential = true; // La cookie es esencial para el funcionamiento de la aplicación
+});
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -35,6 +43,8 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession(); // Habilitar el uso de sesiones
 
 app.MapStaticAssets();
 

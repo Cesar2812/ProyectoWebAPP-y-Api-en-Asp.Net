@@ -43,8 +43,7 @@
                             </span>
                         </td>
                         <td>
-                            <a asp-action="Editar" asp-controller="Producto" asp-route-id="@item.Codigo_Producto" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</a>
-                            <a asp-action="Eliminar" asp-controller="Producto" asp-route-id="@item.Codigo_Producto" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar</a>
+                            <a asp-action="DarDeBaja" asp-controller="Producto" asp-route-codigo="@item.Codigo_Producto" class="btn btn-danger"><i class="bi bi-trash"></i>Dar De Baja</a>
                         </td>
                     </tr>
                 }

@@ -15,7 +15,7 @@ namespace Persistencia.Entities
 
         [Required]
         [StringLength(20)]
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
         [Required]
         [ForeignKey("TipoProducto")]

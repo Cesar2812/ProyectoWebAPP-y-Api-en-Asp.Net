@@ -1,0 +1,51 @@
+﻿@model Persistencia.Entities.Producto_Stock;
+@{
+    ViewData["Title"] = "DAR DE BAJA PRODUCTO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header bg-primary-dark">
+        DAR DE BAJA A PRODUCTO
+    </div>
+
+    <div class="card-body">
+        <form asp-action="DarDeBajaConfirmado" asp-controller="Producto" method="post">
+
+            <!-- Campo oculto para identificar el registro -->
+            <input asp-for="Codigo_Producto" type="hidden" class="form-control">
+
+            <div class="alert alert-warning" role="alert">
+                ¿Desea dar de baja el producto
+                <strong>@Model.Producto?.Nombre</strong>
+                con forma de venta en 
+                <strong> @Model.FormaVenta?.Descripcion_FormaVenta</strong>?
+            </div>
+
+
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-x-circle"></i> Dar de Baja
+            </button>
+            <a asp-action="Listar" asp-controller="Producto" class="btn btn-secondary">
+                <i class="bi bi-card-checklist"></i> Volver a la Lista
+            </a>
+        </form>
+    </div>
+</div>
+
+@section scripts {
+    @if (ViewBag.Exito != null && (bool)ViewBag.Exito)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto dado de baja correctamente',
+                showConfirmButton: false,
+                timer: 1300
+            }).then((result) => {
+                window.location = '@Url.Action("Listar", "Producto")';
+            });
+        </script>
+    }
+}
+
