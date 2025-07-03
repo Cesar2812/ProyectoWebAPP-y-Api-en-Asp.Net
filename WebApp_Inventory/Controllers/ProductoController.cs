@@ -11,10 +11,10 @@ namespace WebApp_Inventory.Controllers;
 
 public class ProductoController : Controller
 {
-    private readonly Inventory_Context _db;
+    private readonly Inventory_Context _db;//declarando el contexto ya configurado para SQL Server
 
-    //inyectando contexto a la base de datos
-    public ProductoController(Inventory_Context db)
+   
+    public ProductoController(Inventory_Context db) //inyectando contexto a la base de datos
     {
         _db = db;
     }
@@ -34,20 +34,22 @@ public class ProductoController : Controller
     [HttpGet]
     public IActionResult Crear()
     {
+        //obteniendo en un ViwBag la lista de tipos de producto y formas de ventas
         ViewBag.TiposProducto = new SelectList(_db.Tipo_Producto, "id_TipoProducto", "Descripcion_Tipo");
         ViewBag.FormasVenta = new SelectList(_db.Forma_Venta, "id_FormaVenta", "Descripcion_FormaVenta");
 
 
-        // Carga el diccionario de formas de venta
+        // Carga el diccionario de formas de venta para mostrarlos en la tabla  dinamica
         var formasVentaDict = _db.Forma_Venta
             .ToDictionary(f => f.id_FormaVenta, f => f.Descripcion_FormaVenta);
 
-        ViewBag.FormasVentaDict = formasVentaDict;
+        ViewBag.FormasVentaDict = formasVentaDict;//ViewBag que se va a pasar a la Tabla
 
 
         // Obtener detalles actuales en sesión
         var json = HttpContext.Session.GetString("ListaDetalle");
-        List<ProductoStockDetalleViewModel> detalles = new List<ProductoStockDetalleViewModel>();
+
+        List<ProductoStockDetalleViewModel> detalles = new List<ProductoStockDetalleViewModel>();//Creando Lista de detalle del modelo
 
         if (json != null)
         {
@@ -69,7 +71,8 @@ public class ProductoController : Controller
             return RedirectToAction("Crear");
         }
 
-        var json = HttpContext.Session.GetString("ListaDetalle");
+        var json = HttpContext.Session.GetString("ListaDetalle");//variable de sesion que mantendra la data en la tabla
+
         List<ProductoStockDetalleViewModel> lista = new();
 
         if (json != null)
@@ -79,7 +82,7 @@ public class ProductoController : Controller
 
 
         // Verificar duplicado por código
-        if (lista.Any(d => d.Codigo_Producto == detalle.Codigo_Producto))
+        if (lista.Any(d => d.Codigo_Producto == detalle.Codigo_Producto))//validando con Any si exste ese codigo en la lista osea que si esta el codigo cualquiera de los codigos pasados en el objeto, en la lista
         {
             TempData["Error"] = "Ya existe este Codigo en el resgistro.";
             return RedirectToAction("Crear");
@@ -87,6 +90,7 @@ public class ProductoController : Controller
 
         lista.Add(detalle);
         json = JsonSerializer.Serialize(lista);
+
         HttpContext.Session.SetString("ListaDetalle", json);
         return RedirectToAction("Crear");
     }
@@ -104,10 +108,15 @@ public class ProductoController : Controller
 
         // Leer detalles
         var jsonDetalles = HttpContext.Session.GetString("ListaDetalle");
-        List<ProductoStockDetalleViewModel> detalles = new();
+
+        //inicialializando lista
+        List<ProductoStockDetalleViewModel> detalles = new List<ProductoStockDetalleViewModel>();
 
         if (jsonDetalles != null)
+        {
             detalles = JsonSerializer.Deserialize<List<ProductoStockDetalleViewModel>>(jsonDetalles) ?? new List<ProductoStockDetalleViewModel>();
+        }
+           
 
         if (!detalles.Any())
         {

@@ -9,10 +9,11 @@ var builder = WebApplication.CreateBuilder(args);//creacion de el constructor de
 var conexionString = builder.Configuration.GetConnectionString("CadenaSql");//leyendo la cadena de conexion desde el appsettings.json
 
 
-//inyeccion de dependencias para el contexto de la base de datos usando cofiguarada para usar SQL Server
+//inyeccion de dependencias para el contexto de la base de datos usando cofiguarada para usar SQL Server creando el servicio de al contruir la app y agregando 
+//el contexto
 builder.Services.AddDbContext<Inventory_Context>(options =>
 {
-    options.UseSqlServer(conexionString);
+    options.UseSqlServer(conexionString);//agregando las opciones de uso de sql server al contexto
 });
 
 

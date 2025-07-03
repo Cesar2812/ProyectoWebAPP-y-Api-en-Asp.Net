@@ -10,13 +10,13 @@ public class FormaVentaController : Controller
 
     private JsonSerializerOptions options = new JsonSerializerOptions
     {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,//agregado la sintaxis camelcase al los JSON que se devuelen de la API
     };
 
     public FormaVentaController()
     {
-        var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-        _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;
+        var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();//configurando la variable de conreuccion para que cuando se cree el controler obtenga el archivo de cofiguracion
+        _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;//obteniendo el endpoint de la API desde el archivo de configuracion 
     }
 
     public IActionResult Listar()
@@ -24,8 +24,8 @@ public class FormaVentaController : Controller
         List<Forma_Venta> lista = new List<Forma_Venta>();
 
 
-        var client = new HttpClient();
-        client.BaseAddress = new Uri(_baseUrl);
+        var client = new HttpClient();//cliente http para consumir la API
+        client.BaseAddress = new Uri(_baseUrl);//endpoint como parametro
         var response = client.GetAsync("/Forma_Venta");
         if (response.Result.IsSuccessStatusCode)
         {
@@ -138,6 +138,4 @@ public class FormaVentaController : Controller
         }
        
     }
-
-
 }
