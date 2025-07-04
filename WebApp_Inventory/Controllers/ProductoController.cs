@@ -118,7 +118,7 @@ public class ProductoController : Controller
         }
            
 
-        if (!detalles.Any())
+        if (!detalles.Any())//osea la lista esta vacia
         {
             TempData["Error"] = "Debe agregar al menos un detalle.";
             return RedirectToAction("Crear");
@@ -221,14 +221,14 @@ public class ProductoController : Controller
         }
         else
         {
-            productoStock.Estado = false; // Lo marcas como inactivo
+            productoStock.Estado = false; //cambiando a no disponible
 
             _db.SaveChanges();
 
-            // Si quieres mostrar el SweetAlert
+           
             ViewBag.Exito = true;
 
-            // Cargar la relación de nuevo por si la vista la necesita
+            // Cargar la relación de nuevo
             _db.Entry(productoStock).Reference(p => p.Producto).Load();
             _db.Entry(productoStock).Reference(p => p.FormaVenta).Load();
 
