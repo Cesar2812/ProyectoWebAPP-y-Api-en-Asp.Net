@@ -19,7 +19,7 @@ public class ProductoController : Controller
         _db = db;
     }
 
-    //listar prodcutos en la Tabla
+    //listar prodcutos en la Tabla viniendo de la base de datos
     public IActionResult Listar()
     {
         var lista = _db.Producto_Stock
@@ -40,6 +40,7 @@ public class ProductoController : Controller
 
 
         // Carga el diccionario de formas de venta para mostrarlos en la tabla  dinamica
+        //lo cual ocurre solamente cuando se agregan datos a la tabla deinamica
         var formasVentaDict = _db.Forma_Venta
             .ToDictionary(f => f.id_FormaVenta, f => f.Descripcion_FormaVenta);
 
