@@ -134,8 +134,10 @@ public class FormaVentaController : Controller
         }
         else
         {
-            return View();
+            var mensajeError = response.Result.Content.ReadAsStringAsync().Result;
+            ViewBag.MensajeError = mensajeError;
+            
         }
-       
+        return View();
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Persistencia.Contexto_DataBase;
 using Persistencia.Entities;
+using System.Reflection.Metadata.Ecma335;
 
 var builder = WebApplication.CreateBuilder(args);//creacion de el constructor de la API
 
@@ -72,9 +73,19 @@ app.MapDelete("/Tipo_Producto/{id}", (int id, Inventory_Context db) =>
     {
         return Results.NotFound();//retornando 404 si no se encuentra el objeto
     }
-    db.Tipo_Producto.Remove(obj);//eliminando el objeto de la base de datos
-    db.SaveChanges();//guardando los cambios en la base de datos
-    return Results.NoContent();//retornando 204 No Content
+
+    bool estaAsociado = db.Producto.Any(p => p.id_tipoProducto == id);//true o false si no lo encuentra
+    if (estaAsociado)
+    {
+        return Results.BadRequest("No se puede borrar el tipo de producto porque existen productos de este Tipo");
+    }
+    else
+    {
+        db.Tipo_Producto.Remove(obj);//eliminando el objeto de la base de datos
+        db.SaveChanges();//guardando los cambios en la base de datos
+        return Results.NoContent();//retornando 204 No Content
+    }
+       
 });
 #endregion
 
@@ -130,9 +141,18 @@ app.MapDelete("/Forma_Venta/{id}", (int id, Inventory_Context db) =>
     {
         return Results.NotFound();//retornando 404 si no se encuentra el objeto
     }
-    db.Forma_Venta.Remove(obj);//eliminando el objeto de la base de datos
-    db.SaveChanges();//guardando los cambios en la base de datos
-    return Results.NoContent();//retornando 204 No Content
+    //validacion si la forma de venta esta asociada a un producto
+    bool estaAsociada = db.Producto_Stock.Any(p => p.id_formaventa == id);//cualquiera de los que se esta pasando como parametro esta en la tabla devuelve true
+    if (estaAsociada)
+    {
+        return Results.BadRequest("No se puede borrar la forma de venta porque hay productos en Stock con esta Forma de Venta");
+    }
+    else
+    {
+        db.Forma_Venta.Remove(obj);//eliminando el objeto de la base de datos
+        db.SaveChanges();//guardando los cambios en la base de datos
+        return Results.NoContent();//retornando 204 No Content exito sin cotenido porque fue eliminado
+    }
 });
 #endregion 
 

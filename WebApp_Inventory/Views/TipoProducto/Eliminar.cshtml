@@ -40,5 +40,20 @@
             });
         </script>
     }
+
+    @if (ViewBag.MensajeError != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo eliminar',
+                text: @Html.Raw(Json.Serialize(ViewBag.MensajeError)),
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                window.location = '@Url.Action("Listar", "TipoProducto")';
+            });
+        </script>
+    }
 }
 
