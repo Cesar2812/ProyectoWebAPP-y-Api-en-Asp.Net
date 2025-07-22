@@ -6,13 +6,14 @@ namespace WebApp_Inventory.Controllers;
 
 public class TipoProductoController : Controller
 {
-    private static string? _baseUrl;
+    private static string? _baseUrl;//variable que recibira la url de la api desde appsettings
 
     private JsonSerializerOptions options = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-    public TipoProductoController()
+
+    public TipoProductoController()//desde el momento de su construccion
     {
         var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
         _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;

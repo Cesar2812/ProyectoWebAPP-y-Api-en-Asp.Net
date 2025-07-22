@@ -58,8 +58,42 @@
 
             <hr />
 
+            <h5>DETALLES DEL PRODUCTO</h5>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>CODIGO</th>
+                        <th>FORMA DE VENTA</th>
+                        <th>STOCK</th>
+                    </tr>
+                </thead>
+                @if (ViewBag.Detalles != null && ((List<ProductoStockDetalleViewModel>)ViewBag.Detalles).Any())
+                {
+                    <tbody>
+                        @foreach (var item in (List<ProductoStockDetalleViewModel>)ViewBag.Detalles)
+                        {
+                            <tr>
+                                <td>@item.Codigo_Producto</td>
+                                <td>
+                                    @{
+                                        var dict = ViewBag.FormasVentaDict as Dictionary<int, string>;
+                                        string textoFormaVenta = "N/A";
+                                        if (dict != null && dict.ContainsKey(item.id_formaventa))
+                                        {
+                                            textoFormaVenta = dict[item.id_formaventa];
+                                        }
+                                    }
+                                    @textoFormaVenta
+                                </td>
+                                <td>@item.Stock</td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+
             <!-- TABLA DE DETALLES -->
-            @if (ViewBag.Detalles != null && ((List<ProductoStockDetalleViewModel>)ViewBag.Detalles).Any())
+          @*   @if (ViewBag.Detalles != null && ((List<ProductoStockDetalleViewModel>)ViewBag.Detalles).Any())
             {
                 <h5>DETALLES DEL PRODUCTO</h5>
                 <table class="table table-striped table-bordered">
@@ -91,7 +125,7 @@
                         }
                     </tbody>
                 </table>
-            }
+            } *@
 
             <!-- Botón final para guardar TODO -->
             <button type="submit" class="btn btn-success mt-3">
@@ -113,7 +147,7 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Éxito',
-                                text: '@TempData["Guardado"]',
+                            text: '@TempData["Guardado"]',
                             showConfirmButton: false,
                             timer: 1300
                             }).then(() => {

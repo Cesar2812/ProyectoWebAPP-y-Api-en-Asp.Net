@@ -24,7 +24,7 @@ public class ProductoController : Controller
     {
         var lista = _db.Producto_Stock
         .Include(ps => ps.Producto)
-            .ThenInclude(p => p.TipoProducto)
+        .ThenInclude(p => p.TipoProducto)
         .Include(ps => ps.FormaVenta)
         .ToList();
         return View(lista);
