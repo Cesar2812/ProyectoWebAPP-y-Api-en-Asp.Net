@@ -52,5 +52,21 @@
             });
         </script>
     }
+
+
+    @if (ViewBag.MensajeError != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo Registrar',
+                text: @Html.Raw(Json.Serialize(ViewBag.MensajeError)),
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                window.location = '@Url.Action("Crear", "FormaVenta")';
+            });
+        </script>
+    }
 }
 

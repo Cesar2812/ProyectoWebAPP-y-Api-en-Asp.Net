@@ -6,13 +6,14 @@ namespace WebApp_Inventory.Controllers;
 
 public class FormaVentaController : Controller
 {
-    private static string? _baseUrl;
+    private static string? _baseUrl;//varibale que almacena el endpoint de la API que se va a consumir
 
     private JsonSerializerOptions options = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,//agregado la sintaxis camelcase al los JSON que se devuelen de la API
     };
 
+    //constructor del controlador
     public FormaVentaController()
     {
         var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();//configurando la variable de conreuccion para que cuando se cree el controler obtenga el archivo de cofiguracion
@@ -21,7 +22,7 @@ public class FormaVentaController : Controller
 
     public IActionResult Listar()
     {
-        List<Forma_Venta> lista = new List<Forma_Venta>();
+        List<Forma_Venta> lista = new List<Forma_Venta>();//lista del modelo Forma_Venta que se va a llenar con los datos de la API
 
 
         var client = new HttpClient();//cliente http para consumir la API
@@ -37,11 +38,13 @@ public class FormaVentaController : Controller
         return View(lista);
     }
 
+
     //crear una Nueva Forma de Venta
     public IActionResult Crear()
     {
         return View();
     }
+
 
     [HttpPost]
     public IActionResult Crear(Forma_Venta objForma)
@@ -60,8 +63,11 @@ public class FormaVentaController : Controller
         }
         else
         {
-            return View();
+            var mensajeError = response.Result.Content.ReadAsStringAsync().Result;
+            ViewBag.MensajeError = mensajeError;
+           
         }
+        return View();
     }
 
     //editar una Forma de Venta
@@ -113,6 +119,7 @@ public class FormaVentaController : Controller
         if (response.Result.IsSuccessStatusCode)
         {
             var json_respuesta = response.Result.Content.ReadAsStringAsync().Result;
+
             //Deserializando el objeto JSON a un objeto Tipo_Producto
             var objForma = JsonSerializer.Deserialize<Forma_Venta>(json_respuesta, options);
             ob = objForma ?? new Forma_Venta();

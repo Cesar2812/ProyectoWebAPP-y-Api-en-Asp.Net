@@ -90,14 +90,23 @@ app.MapDelete("/Tipo_Producto/{id}", (int id, Inventory_Context db) =>
 #endregion
 
 
+
 //EndPoints Forma_Venta
 #region Forma_Venta
 //POST para Forma_Venta
 app.MapPost("/Forma_Venta", (Forma_Venta objForma, Inventory_Context db) =>
 {
-    db.Forma_Venta.Add(objForma);//agregando el objeto forma venta a la base de datos
-    db.SaveChanges();//guardando los cambios en la base de datos
-    return Results.Created($"/Forma_Venta/{objForma.id_FormaVenta}", objForma);//retornando el objeto creado
+    var formaExistente = db.Forma_Venta.FirstOrDefault(f => f.Descripcion_FormaVenta == objForma.Descripcion_FormaVenta);//verificando si la forma venta ya existe
+    if (formaExistente != null)
+    {
+        return Results.BadRequest("La forma de venta ya existe");//retornando 400 Bad Request si la forma venta ya existe
+    }
+    else
+    {
+        db.Forma_Venta.Add(objForma);//agregando el objeto forma venta a la base de datos
+        db.SaveChanges();//guardando los cambios en la base de datos
+        return Results.Created($"/Forma_Venta/{objForma.id_FormaVenta}", objForma);//retornando el objeto creado
+    }
 });
 
 
@@ -105,7 +114,7 @@ app.MapPost("/Forma_Venta", (Forma_Venta objForma, Inventory_Context db) =>
 app.MapGet("/Forma_Venta", (Inventory_Context db) =>
 {
     var lst = db.Forma_Venta.ToList();//obteniendo la lista de forma venta desde la base de datos
-    return Results.Ok(lst);//retornando la lista de forma venta
+    return Results.Ok(lst);//retornando la lista de forma venta y un codigo 200 OK
 });
 
 //GET para Forma_Venta por id
